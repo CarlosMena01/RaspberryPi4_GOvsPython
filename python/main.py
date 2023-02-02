@@ -10,16 +10,17 @@ pixels = np.array(img)
 # Crear archivo de tiempo
 time_file = open("time.txt", "w")
 
-# Realizar n transformadas FFT
-n = 10
-start = time.time()
-for i in range(n):
-    # Realizar FFT
-    fft = fft2(pixels)
-    fft_shift = fftshift(fft)
+for n in range(1,100):
+    # Realizar n transformadas FFT
+    start = time.time()
+    for i in range(n):
+        # Realizar FFT
+        fft = fft2(pixels)
+        fft_shift = fftshift(fft)
+        pixels = fft_shift
 
-elapsed = time.time() - start
+    elapsed = time.time() - start
 
-# Escribir tiempo en archivo
-time_file.write(str(elapsed))
+    # Escribir iteración/tiempo en archivo
+    time_file.write(str(n) + "/" + str(elapsed) + "\n")
 time_file.close()
