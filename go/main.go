@@ -12,7 +12,7 @@ import (
 
 func main() {
 	// Parámetros del programa
-	m := 30 //Máximo número de FFTs consecutivas
+	m := 40 //Máximo número de FFTs consecutivas
 
     // Abrir imagen
     file, err := os.Open("../image.jpg")
@@ -60,7 +60,7 @@ func main() {
 		elapsed := time.Since(start)
 	
 		// Escribir tiempo en archivo
-		message := fmt.Sprintf("%d/%s \n",n,elapsed.String())
+		message := fmt.Sprintf("%d/%.6f \n",n,elapsed.Seconds())
 		timeFile.WriteString(message)	
 	}
 }

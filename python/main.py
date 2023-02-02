@@ -6,7 +6,7 @@ from scipy.fftpack import fft2, fftshift
 from progress.bar import Bar
 
 # Parámetros del programa
-m = 30 # Máximo número de FFTs consecutivas
+m = 40 # Máximo número de FFTs consecutivas
 
 # Creamos la barra de progreso
 bar = Bar('Procesando:', max = m)
@@ -27,7 +27,7 @@ for n in range(1,m + 1):
         fft_shift = fftshift(fft)
         pixels = fft_shift
 
-    elapsed = time.time() - start
+    elapsed = round(time.time() - start,6)
 
     # Escribir iteración/tiempo en archivo
     time_file.write(str(n) + "/" + str(elapsed) + "\n")
