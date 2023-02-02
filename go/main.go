@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
     "os"
     "time"
     "image"
@@ -10,6 +11,9 @@ import (
 )
 
 func main() {
+	// Parámetros del programa
+	m := 30 //Máximo número de FFTs consecutivas
+
     // Abrir imagen
     file, err := os.Open("../image.jpg")
     if err != nil {
@@ -40,21 +44,23 @@ func main() {
     }
     defer timeFile.Close()
 
-    // Realizar n transformadas FFT de forma concurrente
-    n := 10
-    var wg sync.WaitGroup
-    start := time.Now()
-    for i := 0; i < n; i++ {
-        wg.Add(1)
-        go func() {
-            defer wg.Done()
-            // Realizar FFT
-            pixels = fft.FFT2(pixels)
-        }()
-    }
-    wg.Wait()
-    elapsed := time.Since(start)
-
-    // Escribir tiempo en archivo
-    timeFile.WriteString(elapsed.String())
+	for n := 0; n < (m+1); n++ {
+		// Realizar n transformadas FFT de forma concurrente
+		var wg sync.WaitGroup
+		start := time.Now()
+		for i := 0; i < n; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				// Realizar FFT
+				pixels = fft.FFT2(pixels)
+			}()
+		}
+		wg.Wait()
+		elapsed := time.Since(start)
+	
+		// Escribir tiempo en archivo
+		message := fmt.Sprintf("%d/%s \n",n,elapsed.String())
+		timeFile.WriteString(message)	
+	}
 }
