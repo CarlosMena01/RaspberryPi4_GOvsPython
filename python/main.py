@@ -6,8 +6,7 @@ from scipy.fftpack import fft2, fftshift
 from progress.bar import Bar
 
 # Parámetros del programa
-m = 40 # Máximo número de FFTs consecutivas
-
+m = 21 #Máxima cantidad de FFTs
 # Creamos la barra de progreso
 bar = Bar('Procesando:', max = m)
 
